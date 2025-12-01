@@ -16,7 +16,7 @@
     --text-primary: #f5f5cc;
     --text-secondary: #E0E0E0;
     /*background colors*/
-    --bg-dark: #1A1A1A;
+    --bg-dark: #242424;
     --bg-light: #2E2E2E;
     /*border accent*/
     --border-accent: #4c3a2b;
@@ -24,24 +24,78 @@
     --font-header: "Georgia", "Times New Roman", serif;
     --font-body: "Palatino Linotype", "Book Antiqua", serif:
 }
+
+/*general body style*/
 body {
     background-color: var(--bg-dark);
     color: var(--text-primary);
     font-family: var(--font-body);
     margin: 0;
-    padding: 0;
+    padding: 2em;
+    line-height: 1.8;
 }
+
+/*header styles*/
 h1, h2, h3 {
     color: var(--accent-gold);
     text-shadow: 2px 2px 4px var(--stone-dark);
     font-family: var(--font-header);
     text-transform: uppercase;
     letter-spacing: 2px;
-    text-shadow: 2px 2px 4px var(--stone-dark);
-
+    margin-bottom: 1em;
+}
+h2 {
+    color: var(--stained-glass-purple);
+}
+h3 {
+    color: var(--stained-glass-blue);
 }
 .sidebar {
     background-color: var(--stone-medium);
     padding: 15px;
     border-right: 3px solid var(--accent-gold);
+}
+/*link styles*/
+a {
+    color: var(--stained-glass-red);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--stained-glass-red);
+    transition: all 0.3s ease;
+}
+a:hover {
+    color: var(--stained-glass-blue);
+    border-bottom-style: solid;
+    text-shadow: 1px 1px 3px var(--stone-dark);
+}
+/*section styles*/
+section, article, .summary, .preamble, .participation, .benefits, .requirements {
+    background-color: var(--bg-light);
+    border: 2px solid var(--border-accent);
+    padding: 1em;
+    margin-bottom: 2em;
+    box-shadow: 4px 4px 10px var(--stone-dark);
+    border-radius: 4px;
+    border-left: 4px solid var(--accent-gold);
+}
+/*sidebar styles*/
+.sidebar {
+    background-color: var(--stone-medium);
+    padding: 15px;
+    border-right: 3px solid var(--accent-gold);
+    box-shadow: 2px 2px 8px var(--stone-dark);
+}
+
+.sidebar h3 {
+    color: var(--accent-gold);
+    text-shadow: 1px 1px 3px var(--stone-dark);
+}
+
+/*footer styles*/
+footer {
+    text-align: center;
+    padding: 1em;
+    background-color: var(--stone-dark);
+    color: var(--text-secondary);
+    border-top: 2px solid var(--accent-gold);
+    margin-top: 3em;
 }
