@@ -54,18 +54,19 @@ border: 7px solid var(--yellow); /* bright yellow border*/
 padding: 50px; /*spacing inside so text doesn’t touch the border */
 margin: 60px auto; /* vertical spacing between panels + horizontally centered */
 max-width: 960px; /* keeps panels from stretching too wide on huge screens */
-box-shadow: 0 0 30px rgba(255,255,0,0.4);
+box-shadow: 0 0 30px rgba(255,255,0,0.4); /*shadow to make the borders glow */
 }
 
 footer {
-    text-align: center;
+    text-align: center; /*align footer notes to center */
 }
 
 h1, h2, h3 {
-    font-family: 'Orbitron', sans-serif; font-weight: 900; 
+    font-family: 'Orbitron', sans-serif; font-weight: 900; /*header font on theme*/
 }
-
-h1 {
+/*----------------------------*/
+/*sections just getting the h1-h3 colored, sized, and positioned*/
+h1 { 
   font-size: 5rem;
   text-align: center;
   color: var(--yellow);
@@ -88,6 +89,7 @@ h3 {
   padding-bottom: 10px;
   margin-bottom: 25px;
 }
+/*----------------------------------*/
 
 a {
     color: var(--red);
