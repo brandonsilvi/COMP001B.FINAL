@@ -1,1 +1,40 @@
 /* Cyberpunk Inspired look */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&family=Share+Tech+Mono&display=swap');
+/*link to googlefonts*/
+
+* {
+    margin:0; padding:0; box-sizing:border-box; /*page reset*/
+}
+
+body {
+  margin: 0; /* ensures no extra space around the very edge of the browser */
+  min-height: 100vh; /*pPage always takes at least full viewport height */
+  font-family: 'Share Tech Mono', monospace; /* retro terminal font for all text */
+  color: #ccffff; /* light cyan text – highly readable over dark neon backgrounds */
+  background: #000; /* solid black fallback if the GIF ever fails to load */
+  position: relative; /* required so ::before and ::after are positioned relative to <body> */
+  overflow-x: hidden; /* prevents any horizontal scrollbar from appearing */
+}
+
+/* adding background GIF*/
+body::before {
+  content: "";/* required to create a pseudo-element */
+  position: fixed; /* sticks to the viewport even when scrolling */
+  inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0; → full screen */
+  z-index: -2; /* puts the background behind everything (content is z-index 0 or higher) */
+  pointer-events: none; /* allows clicks to pass through to the actual page */
+  /* background GIF url */
+  background: url("https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHUxajBpNngwYnVqd25vYzF3MHZub2h4dW9kY3VpNDd6dzRqd2YxNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jx4jKhrKvifvCZtyN5/giphy.gif") center center fixed no-repeat;
+  background-size: 100%; /*controls background image size */
+  image-rendering: auto; /* reduce pixelation */
+}
+
+/* dark overlay */
+body::after {
+  content: "";/* required to create the overlay pseudo-element */
+  position: fixed; /* covers the entire viewport */
+  inset: 0;  /* full-screen again */
+  background: rgba(0, 0, 0, 0.65); /*black overlay to help text visability */
+  z-index: -1; /*in front of gif behind text*/
+  pointer-events: none; /* allows clicks to pass through to the actual page */
+}
