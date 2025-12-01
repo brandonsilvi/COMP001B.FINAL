@@ -419,28 +419,6 @@ html {
      background: var(--stained-glass-green); 
     }
 
-/* Design Selection Header (Half circle top) */
-#design-selection::before {
-    content: "Select a Design:"; /* text inside the element */
-    display: flex; /*enables flex container for centering*/
-    align-items: center; /* centers content vertically */
-    justify-content: center; /* centers content horizontally */
-    width: 100%; 
-    margin: 0 auto; 
-    height: 120px; 
-    background: var(--stained-glass-purple); /* background color from root variables */
-    border-radius: 50% 50% 0 0; /* creates the half-circle shape (rounded top, flat bottom) */
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.5); /* subtle inner shadow for depth/texture */
-    border: 2px solid var(--stone-dark); /* dark border for framing */
-    font-family: var(--font-header);
-    font-size: 1.5rem; 
-    color: var(--accent-gold); 
-    text-shadow: 1px 1px 2px var(--stone-dark);
-    grid-row: 1 / 2; /* positions the pseudo-element in the first row of the #design-selection grid */
-    z-index: 2; /* ensures it stacks above the content panes */
-    box-sizing: border-box;
-}
-
 /* Responsive tweaks */
 @media (max-width: 900px) { 
     .page-wrapper { /*collapse the main page grid*/
@@ -485,4 +463,85 @@ html {
     #design-selection nav ul li {
         padding: 0.5rem; /* reduce padding */
     }
+}
+
+/*------------fixing design for the windows--------------*/
+#design-selection {
+  margin: 4rem 0 2.5rem; /* space above and below the entire window */
+  padding: 0; /* removes any default padding */
+  background: transparent; /* no background so sidebar shows through */
+  border: none; /* removes any old borders */
+  box-shadow: none; /* removes old shadows */
+  position: relative; /* needed so the ::before dome can be positioned inside */
+}
+
+/* The purple half-dome at the top that says "Select a Design:" */
+#design-selection::before {
+  content: "Select a Design:"; /* the text that appears */
+  position: relative; /* keeps it in normal flow (no overlap issues) */
+  display: block; /* makes it behave like a real block element */
+  height: 160px; /* height of the dome */
+  background: var(--stained-glass-purple); /* rich purple glass color */
+  color: var(--accent-gold); /* gold text */
+  font-size: 2.1rem; /* big, majestic text */
+  font-weight: bold; /* strong and clear */
+  text-shadow: 3px 3px 10px black; /* deep shadow so text glows through glass */
+  text-align: center; /* center the text horizontally */
+  line-height: 160px; /* vertically centers text perfectly */
+  border-radius: 100px 100px 0 0; /* curved edge top */
+  border: 6px solid #111; /* thick black stone frame (like real cathedral stone) */
+  border-bottom: none; /* no border on the bottom — connects to panes */
+  box-shadow: 
+    inset 0 0 70px rgba(0,0,0,0.8), /* deep inner glow — looks like thick glass */
+    0 15px 30px rgba(0,0,0,0.7); /* strong drop shadow below */
+  margin-bottom: -6px; /* pulls the panes up so they touch perfectly (no gap) */
+}
+
+/* The grid of 8 stained-glass panes below the dome */
+#design-selection nav ul {
+  display: grid; /* turns the list into a 4×2 grid */
+  grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+  gap: 0; /* no space between panes */
+  padding: 0; /* clean inside */
+  margin: 0; /* no extra spacing */
+  background: #111; /* dark stone background */
+  border-radius: 0 0 16px 16px; /* rounded bottom corners only */
+  overflow: hidden; /* cuts off any overflow */
+  border: 6px solid #111; /* same black stone frame as the dome */
+  list-style: none; /* removes bullets */
+  box-shadow: 0 15px 35px rgba(0,0,0,0.8); /* strong shadow so it floats above sidebar */
+}
+
+/* Each individual stained-glass pane */
+#design-selection nav ul li {
+  aspect-ratio: 1; /* forces perfect squares */
+  display: flex; /* flexbox for perfect centering */
+  align-items: center; /* vertical center */
+  justify-content: center; /* horizontal center */
+  text-align: center; /* backup text centering */
+  font-weight: bold; /* strong text */
+  color: white; /* bright text over dark glass */
+  background: rgba(100,130,170,0.94) !important; /* blue glass (semi-transparent) */
+  border: 4px solid #000; /* REAL black lead lines (like real stained glass) */
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.7); /* inner depth — glass feels thick */
+  transition: all 0.35s ease;  /* smooth hover animation */
+}
+
+/* Hover effect — the glass lights up like divine light hits it */
+#design-selection nav ul li:hover {
+  filter: brightness(1.7); /* glass glows brighter */
+  box-shadow: 
+    inset 0 0 60px rgba(0,0,0,0.5), /* deeper inner glow */
+    0 0 50px var(--accent-gold); /* golden halo around the pane */
+  transform: scale(1.04);  /* subtle "pop" on hover */
+}
+
+/* Correct colors for red and green panes */
+#design-selection li:nth-child(2), 
+#design-selection li:nth-child(3) { 
+  background: rgba(180,80,80,0.94) !important; /* rich red glass */
+}
+#design-selection li:nth-child(6), 
+#design-selection li:nth-child(7) { 
+  background: rgba(80,150,110,0.94) !important; /* deep green glass */
 }
