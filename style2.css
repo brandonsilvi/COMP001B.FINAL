@@ -1,1 +1,445 @@
 /* Cyberpunk Inspired look */
+/* going for a gothic look, using https://en.wikipedia.org/wiki/Gothic_cathedrals_and_churches for some inspiration */
+
+/* Root colors */
+:root {
+    --stone-dark: #2B2B2B;
+    --stone-medium: #3B3B3B;
+    --stone-light: #555555;
+
+    --stained-glass-blue: #5A7C9C;
+    --stained-glass-red: #A14F4F;
+    --stained-glass-green: #4D6F58;
+    --stained-glass-purple: #7C5D7F;
+    --accent-gold: #C9A74F;
+
+    --text-primary: #F5F5CC;
+    --text-secondary: #E0E0E0;
+
+    --font-header: "Georgia", "Times New Roman", serif;
+    --font-body: "Palatino Linotype", "Book Antiqua", serif;
+}
+
+/* Box-sizing globally */
+* {
+    box-sizing: border-box; 
+    margin: 0;
+    padding: 0;
+}
+
+/* Body */
+body {
+    background: url('media/cathedral-hall-background.jpg') center/cover no-repeat fixed; /* gothic cathedral interior set as background */
+    color: var(--text-primary); /* light text for contrast */
+    font-family: var(--font-body); 
+    line-height: 1.8; /* increased line height for readability */
+    padding: 2em; /* padding around content */
+    position: relative; /* for overlay */
+}
+
+/* Overlay for gothic effect */
+body::before {
+    content: ""; /* required for pseudo-element */
+    position: fixed; /* fixed to cover entire viewport */
+    top:0; /* top edge */
+    left:0; /* left edge */
+    width:100%; height:100%; /* full size */
+    background: rgba(0,0,0,0.6); /* dark overlay for gothic mood */
+    z-index: -1; /* behind content */
+}
+
+/* Headers */
+h1, h2, h3 {
+    font-family: var(--font-header);
+    text-transform: uppercase; /* uppercase for gothic style */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* subtle shadow for depth */
+    margin: 1em 0; /* margin around headers */
+    padding: 0.5em; /* padding inside headers */
+}
+ 
+/* Specific header styles */
+h1 { color: var(--accent-gold); font-size: 3rem; border-bottom: 3px solid var(--accent-gold); }
+h2 { color: var(--text-primary); font-size: 2.4rem; border-bottom: 2px dashed var(--accent-gold); }
+h3 { color: var(--text-secondary); font-size: 2rem; border-bottom: 1px dotted var(--accent-gold); }
+
+/* Links */
+a {
+    color: var(--accent-gold);
+    text-decoration: underline; /* underline links */
+    background-color: var(--stone-dark); /* background color for links */
+    font-weight: bold;
+    padding: 2px 4px; /* padding around link text */
+    transition: color 0.3s ease, text-decoration 0.3s ease; /* smooth transition on hover */ 
+}
+a:hover {
+    color: var(--text-primary); /* change color on hover */
+    text-decoration: none;
+}
+
+/* Page wrapper */
+.page-wrapper {
+    display: grid; /* grid layout for page structure */
+    /* Defines columns: Main Content (flexible) and Sidebar (fixed width) */
+    grid-template-columns: 1fr 280px; 
+    /* Defines areas: Header/Intro spans both, Main and Sidebar side-by-side, Footer spans both */
+    grid-template-areas:  
+        "intro intro" 
+        "main main"
+        "sidebar sidebar" 
+        "footer footer";
+    column-gap: 3rem; /* Space between main and sidebar */
+    row-gap: 2rem; /* Space between rows */
+    width: 90%; /* width of page wrapper */
+    max-width: 1400px; /* Increased max width for better desktop experience */
+    margin: 0 auto; /* center horizontally */
+    box-sizing: border-box; /* include padding/border in size */
+    position: relative;
+    padding-bottom: 600px;
+}
+
+/* Zen Intro Header */
+#zen-intro {
+    grid-area: intro; /* Assigns to the 'intro' area (spans 2 columns) */
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: "intro-header" "intro-summary";
+    margin-bottom: 0; /* remove redundant margin, gap handles spacing */
+    background: none; /* remove default background */
+    box-shadow: none; /* remove default shadow */
+    border: none; /* remove default border */
+}
+
+/* Header panel */
+#zen-intro header {
+    grid-area: intro-header; /*assign to header grid area*/
+    display: block; /* block display for header */
+    background: url('media/cathtopper.jpg') center/cover no-repeat; /* gothic cathedral top image */
+    border-left: 6px solid var(--accent-gold); /* gold left border */
+    border-right: 6px solid var(--accent-gold); /* gold right border */
+    border-top: 6px solid var(--accent-gold); /* gold top border */
+    border-bottom: none;
+    border-radius: 6px 6px 0 0; /* rounded top corners */
+    box-shadow: 3px 3px 14px rgba(0,0,0,0.7); /* shadow for depth */
+    padding: 3rem 2rem; /* padding inside header */
+    position: relative; /* relative positioning for overlay */
+    z-index: 1;
+}
+
+.main.supporting { 
+    grid-area: main;
+}
+
+/* Overlay for header readability */
+#zen-intro header::before {
+    content: ""; /* required for pseudo-element */
+    position: absolute; /* absolute positioning for overlay */
+    top:0; left:0; /* top-left corner */
+    width:100%; height:100%; /* full size of header */
+    background: rgba(0,0,0,0.3); /* semi-transparent overlay */
+    border-radius: 6px 6px 0 0; /* rounded top corners */
+    z-index: 0; /* behind header text */
+}
+
+/* Header text on top of overlay */
+#zen-intro header h1, #zen-intro header h2 {
+    position: relative; /* relative positioning for stacking */
+    z-index: 1; /* above overlay */
+    margin: 0.5em 0; /* margin around text */
+}
+/* Main content area assignment */
+.main.supporting {
+    grid-area: main;
+}
+
+/* Archives and Resources top-right */
+#design-archives, #zen-resources {
+    position: static; 
+    width: auto; 
+    margin-bottom: 1.5rem; /* space below each section */
+    background-color: transparent; /* Use the sidebar's background */
+    padding: 0; /* Remove padding, sidebar has padding */
+    border-radius: 0; 
+    box-shadow: none; 
+}
+
+/* Headings in archives/resources*/
+#design-archives h3, #zen-resources h3 {
+    margin-bottom: 0.5rem; /* space below heading */
+    color: var(--accent-gold); /* gold color */
+}
+
+/* Zen Summary panel below header */
+#zen-summary {
+    grid-area: intro-summary; /*assign to summary grid area */
+    display: block; /* block display for summary panel */
+    background-color: rgba(46,46,46,0.9); /* semi-transparent background */
+    border-left: 6px solid var(--accent-gold); /* gold left border */
+    border-right: 6px solid var(--accent-gold); /* gold right border */
+    border-top: 6px solid var(--accent-gold); /* gold top border */
+    border-bottom: none; /*no bottom border */
+    border-radius: 0 0 6px 6px; /* rounded bottom corners */
+    box-shadow: 3px 3px 14px rgba(0,0,0,0.7); /* shadow for depth */
+    padding: 1.5rem 2rem; /* padding inside summary */
+    margin-bottom: 3rem; /* space below summary */
+    color: var(--text-primary); /* primary text color */
+    z-index: 1; /*keep above background */
+    position: relative; /*overlap adjustment*/ 
+    margin-top: -1px; /*help remove gaps*/
+}
+
+/* Pull Zen Preamble down below summary */
+#zen-preamble {
+    display: block; /* block display for preamble */
+    background-color: var(--stained-glass-green); /* stained glass green background */
+    border-left: 6px solid var(--accent-gold); /* gold left border */
+    border-radius: 6px; /* rounded corners */
+    box-shadow: 3px 3px 14px rgba(0,0,0,0.7); /* shadow for depth */
+    padding: 2rem; /* padding inside preamble */ 
+    margin-top: 3rem; /* space above preamble */
+    color: var(--text-primary); /* primary text color */
+}
+
+/* Sidebar */
+.sidebar {
+    grid-area: sidebar; /* Assigns to the 'sidebar' area */
+    background-color: rgba(59,59,59,0.9); /* semi-transparent background */
+    padding: 1.5em; /* padding inside sidebar */
+    margin: 0; /* margin around sidebar */
+    border-left: 4px solid var(--accent-gold); /* ADDED left border for separation */
+    box-shadow: 2px 2px 12px rgba(0,0,0,0.7); /* shadow for depth */
+    height: fit-content;
+    position: relative;
+}
+.sidebar .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.sidebar h3 {
+    color: var(--accent-gold); /* gold color for sidebar headings */
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8); /* shadow for depth */
+    padding: 0.2em; /* padding inside heading */
+}
+
+/* Sections*/
+section, .summary {
+    background-color: rgba(46,46,46,0.9); /* semi-transparent background */
+    border-left: 6px solid var(--accent-gold); /* gold left border */
+    padding: 2rem; /* padding inside sections*/
+    margin-bottom: 3rem; /* space below sections*/
+    border-radius: 6px; /* rounded corners */
+    box-shadow: 3px 3px 14px rgba(0,0,0,0.7); /* shadow for depth */
+}
+
+/* Footer */
+footer {
+    grid-area: footer; /*assign grid area*/
+    text-align: center; /* center text */
+    padding: 2rem; /* padding inside footer */
+    margin-top: 4rem; /* space above footer */
+    background-color: rgba(43,43,43,0.95); /* semi-transparent background */
+    color: var(--text-secondary); /* secondary text color */
+    border-top: 3px solid var(--accent-gold); /* gold top border */
+}
+
+/* Window panes for sections with stained glass colors */
+#zen-preamble, #zen-explanation, #zen-participation, #zen-benefits, #zen-requirements {
+    background-color: var(--stone-medium); 
+    color: var(--text-primary); 
+    padding: 2rem; 
+    margin-bottom: 2rem; 
+    border-left: 6px solid var(--accent-gold);
+}
+
+/* Style for individual blocks inside the sidebar wrapper */
+.sidebar .wrapper > div {
+    /* General look for blocks (Archives/Resources) - Design Selection is handled separately */
+    background-color: var(--stone-medium); /* Darker stone for the containers */
+    padding: 1.5rem; /* Inner padding */
+    border: 1px solid var(--accent-gold); /* Gold frame */
+    border-radius: 6px; /* Rounded corners for contained feeling */
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Subtle shadow */
+}
+
+/* Override for the Design Selection element (to maintain your stained glass look) */
+#design-selection {
+    /* Revert positioning from when it was a flying element */
+    position: static !important; /* Forces it to behave normally in the flow */
+    transform: none !important;
+    max-width: none !important;
+    width: 100% !important;
+    
+    /* Apply base container styles */
+    background-color: transparent !important; /* Let the window panes show through */
+    padding: 0 !important;
+    margin-bottom: 1.5rem !important; /* Space it out from the next block */
+    border: none !important; /* Remove border from the container, the panes have borders */
+    box-shadow: none !important;
+}
+
+/* Ensure #design-archives and #zen-resources get their border/background now that we're using general rules */
+#design-archives, #zen-resources {
+    /* These inherit from .sidebar .wrapper > div above, which is what we want. */
+    /* Remove any old, conflicting styles if they exist to prevent issues: */
+    position: static; 
+    width: auto; 
+    margin-bottom: 1.5rem; 
+    background-color: var(--stone-medium); /* Explicitly set the stone background */
+    padding: 1.5rem;
+    border-radius: 6px; 
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+}
+
+/* Ensure there's space between Archives and Resources if you want them broken up */
+#design-archives {
+    margin-bottom: 1.5rem; /* Space between archives and resources */
+}
+
+/* 8 panes of the window */
+#design-selection nav ul {
+    display: grid; /* grid layout for panes */
+    grid-template-columns: repeat(4, 1fr); /* 4 columns */
+    grid-template-rows: repeat(2, auto); /* 2 rows */
+    gap: 0; /* no gap between panes */
+    margin: 0; /* no margin */
+    padding: 0; /* no padding */
+    list-style: none; /* remove list styling */
+    width: 100%; /* full width */
+    box-sizing: border-box; /* include padding/border in size */
+}
+/* Styling for all lists inside the Archives and Resources sections */
+#design-archives nav ul, #zen-resources ul {
+    list-style: none; /* Remove list bullets */
+    padding: 0;
+    margin: 0;
+}
+
+#design-archives nav ul li, #zen-resources ul li {
+    padding: 0.5rem 0; /* Vertical spacing */
+    border-bottom: 1px dashed var(--stone-light); /* Subtle divider */
+}
+
+#design-archives nav ul li:last-child, #zen-resources ul li:last-child {
+    border-bottom: none; /* Remove divider from the last item */
+}
+
+/* Make links look clean */
+#design-archives nav ul li a, #zen-resources ul li a {
+    color: var(--text-secondary); /* Lighter text for these utility links */
+    background: none; /* Remove dark background for simple text link */
+    font-weight: normal;
+    padding: 0;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+#design-archives nav ul li a:hover, #zen-resources ul li a:hover {
+    color: var(--accent-gold); /* Gold glow on hover */
+    text-decoration: underline;
+}
+/* Individual panes */
+#design-selection nav ul li { 
+    padding: 1rem; /* padding inside each pane */
+    border: 2px solid var(--stone-dark); /* border color */
+    display: flex; /* flexbox layout */
+    flex-direction: column; /* stack children vertically */
+    justify-content: center; /* center children vertically */
+    align-items: center; /* center children horizontally */
+    text-align: center; /* center text */
+    box-sizing: border-box; /* include padding/border in size */
+}
+
+/* Links inside each pane */
+#design-selection nav ul li a {
+    color: var(--text-primary); /* link color */
+    text-decoration: none; /* remove underline */
+    border-bottom: 1px dotted var(--accent-gold); /* dotted underline */
+}
+
+#design-selection nav ul li a:hover {
+    color: var(--accent-gold); /* hover link color */
+    border-bottom: 1px solid var(--accent-gold); /* solid underline on hover */
+}
+
+/* Hide original heading */
+#design-selection .select {
+    display: none; /* hide original heading */
+}
+
+/* Top row colors */
+#design-selection nav ul li:nth-child(1), #design-selection nav ul li:nth-child(4) {
+     background: var(--stained-glass-blue); 
+    }
+#design-selection nav ul li:nth-child(2), #design-selection nav ul li:nth-child(3) {
+     background: var(--stained-glass-red); 
+    }
+
+/* Bottom row colors */
+#design-selection nav ul li:nth-child(5), #design-selection nav ul li:nth-child(8) {
+     background: var(--stained-glass-blue); 
+    }
+#design-selection nav ul li:nth-child(6), #design-selection nav ul li:nth-child(7) {
+     background: var(--stained-glass-green); 
+    }
+
+/* Design Selection Header (Half circle top) */
+#design-selection::before {
+    content: "Select a Design:"; /* text inside the element */
+    display: flex; /*enables flex container for centering*/
+    align-items: center; /* centers content vertically */
+    justify-content: center; /* centers content horizontally */
+    width: 100%; 
+    margin: 0 auto; 
+    height: 120px; 
+    background: var(--stained-glass-purple); /* background color from root variables */
+    border-radius: 50% 50% 0 0; /* creates the half-circle shape (rounded top, flat bottom) */
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5); /* subtle inner shadow for depth/texture */
+    border: 2px solid var(--stone-dark); /* dark border for framing */
+    font-family: var(--font-header);
+    font-size: 1.5rem; 
+    color: var(--accent-gold); 
+    text-shadow: 1px 1px 2px var(--stone-dark);
+    grid-row: 1 / 2; /* positions the pseudo-element in the first row of the #design-selection grid */
+    z-index: 2; /* ensures it stacks above the content panes */
+    box-sizing: border-box;
+}
+
+/* Responsive tweaks */
+@media (max-width: 1000px) { 
+    .page-wrapper {
+        grid-template-columns: 1fr; /* single column */
+        grid-template-areas: 
+            "intro"
+            "sidebar" /* sidebar stacks on top of main content */
+            "main"
+            "footer";
+        padding-bottom: 2em;
+    }
+
+    .sidebar {
+    border-left: none; /* remove left border when stacked */
+    border-top: 4px solid var(--accent-gold); /* add top border for separation */
+    }
+
+    #design-selection {
+        position: static;
+        transform: none;
+        margin: 2rem auto;
+    }
+}
+
+@media (max-width: 600px) { /* for small screens */
+    #design-selection { 
+        width: 95%; /* wider on small screens */
+    }
+
+    #design-selection nav ul {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+        grid-template-rows: repeat(4, auto); /* 4 rows */
+    }
+
+    #design-selection nav ul li {
+        padding: 0.5rem; /* reduce padding */
+    }
+}

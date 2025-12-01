@@ -83,7 +83,8 @@ a:hover {
     /* Defines areas: Header/Intro spans both, Main and Sidebar side-by-side, Footer spans both */
     grid-template-areas:  
         "intro intro" 
-        "main sidebar" 
+        "main main"
+        "sidebar sidebar" 
         "footer footer";
     column-gap: 3rem; /* Space between main and sidebar */
     row-gap: 2rem; /* Space between rows */
@@ -98,7 +99,9 @@ a:hover {
 /* Zen Intro Header */
 #zen-intro {
     grid-area: intro; /* Assigns to the 'intro' area (spans 2 columns) */
-    position: relative; /* container for top-right archives/resources */
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: "intro-header" "intro-summary";
     margin-bottom: 0; /* remove redundant margin, gap handles spacing */
     background: none; /* remove default background */
     box-shadow: none; /* remove default shadow */
@@ -107,10 +110,14 @@ a:hover {
 
 /* Header panel */
 #zen-intro header {
+    grid-area: intro-header; /*assign to header grid area*/
     display: block; /* block display for header */
     background: url('media/cathtopper.jpg') center/cover no-repeat; /* gothic cathedral top image */
     border-left: 6px solid var(--accent-gold); /* gold left border */
-    border-radius: 6px; /* rounded corners */
+    border-right: 6px solid var(--accent-gold); /* gold right border */
+    border-top: 6px solid var(--accent-gold); /* gold top border */
+    border-bottom: none;
+    border-radius: 6px 6px 0 0; /* rounded top corners */
     box-shadow: 3px 3px 14px rgba(0,0,0,0.7); /* shadow for depth */
     padding: 3rem 2rem; /* padding inside header */
     position: relative; /* relative positioning for overlay */
@@ -128,7 +135,7 @@ a:hover {
     top:0; left:0; /* top-left corner */
     width:100%; height:100%; /* full size of header */
     background: rgba(0,0,0,0.3); /* semi-transparent overlay */
-    border-radius: 6px; /* rounded corners */
+    border-radius: 6px 6px 0 0; /* rounded top corners */
     z-index: 0; /* behind header text */
 }
 
@@ -162,14 +169,21 @@ a:hover {
 
 /* Zen Summary panel below header */
 #zen-summary {
+    grid-area: intro-summary; /*assign to summary grid area */
     display: block; /* block display for summary panel */
     background-color: rgba(46,46,46,0.9); /* semi-transparent background */
     border-left: 6px solid var(--accent-gold); /* gold left border */
-    border-radius: 6px; /* rounded corners */
+    border-right: 6px solid var(--accent-gold); /* gold right border */
+    border-top: 6px solid var(--accent-gold); /* gold top border */
+    border-bottom: none; /*no bottom border */
+    border-radius: 0 0 6px 6px; /* rounded bottom corners */
     box-shadow: 3px 3px 14px rgba(0,0,0,0.7); /* shadow for depth */
-    padding: 2rem; /* padding inside summary */
+    padding: 1.5rem 2rem; /* padding inside summary */
     margin-bottom: 3rem; /* space below summary */
     color: var(--text-primary); /* primary text color */
+    z-index: 1; /*keep above background */
+    position: relative; /*overlap adjustment*/ 
+    margin-top: -1px; /*help remove gaps*/
 }
 
 /* Pull Zen Preamble down below summary */
@@ -207,12 +221,12 @@ a:hover {
     padding: 0.2em; /* padding inside heading */
 }
 
-/* Sections and articles */
-section, article, .summary, .preamble, .participation, .benefits, .requirements {
+/* Sections*/
+section, .summary {
     background-color: rgba(46,46,46,0.9); /* semi-transparent background */
     border-left: 6px solid var(--accent-gold); /* gold left border */
-    padding: 2rem; /* padding inside sections and articles */
-    margin-bottom: 3rem; /* space below sections and articles */
+    padding: 2rem; /* padding inside sections*/
+    margin-bottom: 3rem; /* space below sections*/
     border-radius: 6px; /* rounded corners */
     box-shadow: 3px 3px 14px rgba(0,0,0,0.7); /* shadow for depth */
 }
@@ -234,21 +248,51 @@ footer {
     color: var(--text-primary); 
     padding: 2rem; 
     margin-bottom: 2rem; 
+    border-left: 6px solid var(--accent-gold);
 }
 
-/* Stained glass design-selection container */
+/* Style for individual blocks inside the sidebar wrapper */
+.sidebar .wrapper > div {
+    /* General look for blocks (Archives/Resources) - Design Selection is handled separately */
+    background-color: var(--stone-medium); /* Darker stone for the containers */
+    padding: 1.5rem; /* Inner padding */
+    border: 1px solid var(--accent-gold); /* Gold frame */
+    border-radius: 6px; /* Rounded corners for contained feeling */
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Subtle shadow */
+}
+
+/* Override for the Design Selection element (to maintain your stained glass look) */
 #design-selection {
-   position: absolute;
-   bottom: 40px; /*place at the bttom of the wrapper */
-   left: 50%;   /*center horizontally*/
-   transform: translateX(-50%); /*center align*/
-   width: 90%;
-   max-width: 800px;
-   z-index: 10;
-   display: grid;
-   grid-template-rows: 120px auto;
-   margin: 0;
-   box-sizing: border-box;
+    /* Revert positioning from when it was a flying element */
+    position: static !important; /* Forces it to behave normally in the flow */
+    transform: none !important;
+    max-width: none !important;
+    width: 100% !important;
+    
+    /* Apply base container styles */
+    background-color: transparent !important; /* Let the window panes show through */
+    padding: 0 !important;
+    margin-bottom: 1.5rem !important; /* Space it out from the next block */
+    border: none !important; /* Remove border from the container, the panes have borders */
+    box-shadow: none !important;
+}
+
+/* Ensure #design-archives and #zen-resources get their border/background now that we're using general rules */
+#design-archives, #zen-resources {
+    /* These inherit from .sidebar .wrapper > div above, which is what we want. */
+    /* Remove any old, conflicting styles if they exist to prevent issues: */
+    position: static; 
+    width: auto; 
+    margin-bottom: 1.5rem; 
+    background-color: var(--stone-medium); /* Explicitly set the stone background */
+    padding: 1.5rem;
+    border-radius: 6px; 
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+}
+
+/* Ensure there's space between Archives and Resources if you want them broken up */
+#design-archives {
+    margin-bottom: 1.5rem; /* Space between archives and resources */
 }
 
 /* 8 panes of the window */
@@ -263,7 +307,36 @@ footer {
     width: 100%; /* full width */
     box-sizing: border-box; /* include padding/border in size */
 }
+/* Styling for all lists inside the Archives and Resources sections */
+#design-archives nav ul, #zen-resources ul {
+    list-style: none; /* Remove list bullets */
+    padding: 0;
+    margin: 0;
+}
 
+#design-archives nav ul li, #zen-resources ul li {
+    padding: 0.5rem 0; /* Vertical spacing */
+    border-bottom: 1px dashed var(--stone-light); /* Subtle divider */
+}
+
+#design-archives nav ul li:last-child, #zen-resources ul li:last-child {
+    border-bottom: none; /* Remove divider from the last item */
+}
+
+/* Make links look clean */
+#design-archives nav ul li a, #zen-resources ul li a {
+    color: var(--text-secondary); /* Lighter text for these utility links */
+    background: none; /* Remove dark background for simple text link */
+    font-weight: normal;
+    padding: 0;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+#design-archives nav ul li a:hover, #zen-resources ul li a:hover {
+    color: var(--accent-gold); /* Gold glow on hover */
+    text-decoration: underline;
+}
 /* Individual panes */
 #design-selection nav ul li { 
     padding: 1rem; /* padding inside each pane */
