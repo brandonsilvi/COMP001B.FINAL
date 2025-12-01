@@ -34,6 +34,7 @@ body {
     line-height: 1.8; /* increased line height for readability */
     padding: 2em; /* padding around content */
     position: relative; /* for overlay */
+    font-size: 1.5em; 
 }
 
 /* Overlay for gothic effect */
@@ -239,7 +240,7 @@ footer {
     margin-top: 4rem; /* space above footer */
     background-color: rgba(43,43,43,0.95); /* semi-transparent background */
     color: var(--text-secondary); /* secondary text color */
-    border-top: 3px solid var(--accent-gold); /* gold top border */
+    border-left: 6px solid var(--accent-gold); /* gold left border */
 }
 
 /* Window panes for sections with stained glass colors */
@@ -261,9 +262,8 @@ footer {
     box-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Subtle shadow */
 }
 
-/* Override for the Design Selection element (to maintain your stained glass look) */
+/* Override for the Design Selection element (to maintain stained glass look) */
 #design-selection {
-    /* Revert positioning from when it was a flying element */
     position: static !important; /* Forces it to behave normally in the flow */
     transform: none !important;
     max-width: none !important;
@@ -280,7 +280,6 @@ footer {
 /* Ensure #design-archives and #zen-resources get their border/background now that we're using general rules */
 #design-archives, #zen-resources {
     /* These inherit from .sidebar .wrapper > div above, which is what we want. */
-    /* Remove any old, conflicting styles if they exist to prevent issues: */
     position: static; 
     width: auto; 
     margin-bottom: 1.5rem; 
@@ -410,8 +409,8 @@ footer {
         grid-template-columns: 1fr; /* single column */
         grid-template-areas: 
             "intro"
-            "sidebar" /* sidebar stacks on top of main content */
             "main"
+            "sidebar" 
             "footer";
         padding-bottom: 2em;
     }
