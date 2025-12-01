@@ -127,3 +127,64 @@ a:hover { /* triggers only when the mouse is directly over a link */
 /* this sudden jump in size + brightness creates the aggressive "flash" */
   }
 }
+
+/*----------------------------------------------------------------------------*/
+
+/* this turns the whole page into a smart grid of cards */
+.page-wrapper {
+  display: grid; /* use CSS Grid – the easiest modern layout tool */
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+   /* make as many columns as fit, but each card at least 400px wide */
+   /* auto-fit will automatically fill the space */
+   /* 1fr makes all columns share the space equally */
+  gap: 50px; /* space between every card */
+  padding: 50px 30px; /* space around the whole grid (top/bottom 50px, sides 30px) */
+  max-width: 1600px; /* stops the grid from getting too wide – max about 3 cards + intro */
+  margin: 0 auto; /* centers the entire grid on the page */
+}
+
+/* the big intro card (the one with the main title) */
+.intro {
+  grid-column: 1 / -1; /* on phones: take the full width of the screen */
+}
+
+/* when the screen is 1000px or wider (tablets & desktops) */
+@media (min-width: 1000px) {
+  .intro {
+    grid-column: 1; /* lock the intro card to the LEFT column only */
+    max-width: 660px; /* keep it from getting too wide */
+    align-self: start; /* stops it stretching down – stays at normal height */
+  }
+}
+
+/* all cards get the same cyberpunk look */
+.intro, .summary, .preamble, .explanation, .participation,
+.benefits, .requirements, .design-selection, .design-archives,
+.zen-resources, footer {
+  background: var(--card); /* dark semi-transparent background */
+  border: 8px solid var(--yellow); /* thick yellow border (normal state) */
+  padding: 50px; /* space inside each card so text isn’t touching the edges */
+  box-shadow: 0 0 40px rgba(255,255,0,0.5); /* yellow glow around every card */
+}
+
+/* ------------------------------------- */
+
+/* normal state to animate smoothly */
+.intro:hover, .summary:hover, .preamble:hover, .explanation:hover,
+.participation:hover, .benefits:hover, .requirements:hover,
+.design-selection:hover, .design-archives:hover,
+.zen-resources:hover, footer:hover {
+  transition: all 0.4s ease; /* smoothly animate border, shadow, and movement over 0.4 seconds */
+}
+
+/* color change for card hover on its borders */
+.intro:hover, .summary:hover, .preamble:hover, .explanation:hover,
+.participation:hover, .benefits:hover, .requirements:hover,
+.design-selection:hover, .design-archives:hover,
+.zen-resources:hover, footer:hover {
+  border-color: var(--purple); /* border turns bright purple */
+  box-shadow: 
+    0 0 60px rgba(204, 0, 255, 0.8), /* strong inner purple glow */
+    0 0 100px rgba(204, 0, 255, 0.4); /* big soft purple halo */
+  transform: translateY(-10px); /* card gently lifts up 10px */
+}
