@@ -443,7 +443,7 @@ html {
 
 /* Responsive tweaks */
 @media (max-width: 900px) { 
-    .page-wrapper {
+    .page-wrapper { /*collapse the main page grid*/
         grid-template-columns: 1fr; /* single column */
         grid-template-areas: 
             "intro"
@@ -461,18 +461,16 @@ html {
             "requirements" 
             "lorem"; ;
         }
-    }
-
     .sidebar {
     border-left: none; /* remove left border when stacked */
     border-top: 4px solid var(--accent-gold); /* add top border for separation */
     }
-
     #design-selection {
         position: static;
         transform: none;
         margin: 2rem auto;
     }
+}
 
 @media (max-width: 600px) { /* for small screens */
     #design-selection { 
