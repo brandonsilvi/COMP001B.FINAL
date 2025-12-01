@@ -28,7 +28,7 @@
 
 /* Body */
 body {
-    background: url('media/cathedral-hall-background.jpg') center/cover no-repeat; /* gothic cathedral interior set as background */
+    background: url('media/cathedral-hall-background.jpg') center/cover no-repeat fixed; /* gothic cathedral interior set as background */
     color: var(--text-primary); /* light text for contrast */
     font-family: var(--font-body); 
     line-height: 1.8; /* increased line height for readability */
@@ -57,39 +57,49 @@ h1, h2, h3 {
 }
  
 /* Specific header styles */
-h1 { color: var(--stone-dark); font-size: 3rem; border-bottom: 3px solid var(--accent-gold); }
-h2 { color: var(--stone-dark); font-size: 2.4rem; border-bottom: 2px dashed var(--accent-gold); }
-h3 { color: var(--stone-dark); font-size: 2rem; border-bottom: 1px dotted var(--accent-gold); }
+h1 { color: var(--accent-gold); font-size: 3rem; border-bottom: 3px solid var(--accent-gold); }
+h2 { color: var(--text-primary); font-size: 2.4rem; border-bottom: 2px dashed var(--accent-gold); }
+h3 { color: var(--text-secondary); font-size: 2rem; border-bottom: 1px dotted var(--accent-gold); }
 
 /* Links */
 a {
-    color: black;
+    color: var(--accent-gold);
     text-decoration: underline; /* underline links */
-    background-color: rgb(119, 119, 119); /* background color for links */
+    background-color: var(--stone-dark); /* background color for links */
     font-weight: bold;
     padding: 2px 4px; /* padding around link text */
     transition: color 0.3s ease, text-decoration 0.3s ease; /* smooth transition on hover */ 
 }
 a:hover {
-    color: var(--accent-gold); /* change color on hover */
-    text-decoration: underline solid; /* solid underline on hover */
+    color: var(--text-primary); /* change color on hover */
+    text-decoration: none;
 }
 
 /* Page wrapper */
 .page-wrapper {
     display: grid; /* grid layout for page structure */
-    grid-template-rows: auto 1fr auto; /* header, main, footer */
-    row-gap: 2rem; /* space between rows */
+    /* Defines columns: Main Content (flexible) and Sidebar (fixed width) */
+    grid-template-columns: 1fr 280px; 
+    /* Defines areas: Header/Intro spans both, Main and Sidebar side-by-side, Footer spans both */
+    grid-template-areas:  
+        "intro intro" 
+        "main sidebar" 
+        "footer footer";
+    column-gap: 3rem; /* Space between main and sidebar */
+    row-gap: 2rem; /* Space between rows */
     width: 90%; /* width of page wrapper */
-    max-width: 1200px; /* max width */
+    max-width: 1400px; /* Increased max width for better desktop experience */
     margin: 0 auto; /* center horizontally */
     box-sizing: border-box; /* include padding/border in size */
+    position: relative;
+    padding-bottom: 600px;
 }
 
 /* Zen Intro Header */
 #zen-intro {
+    grid-area: intro; /* Assigns to the 'intro' area (spans 2 columns) */
     position: relative; /* container for top-right archives/resources */
-    margin-bottom: 2rem; /* space below intro */
+    margin-bottom: 0; /* remove redundant margin, gap handles spacing */
     background: none; /* remove default background */
     box-shadow: none; /* remove default shadow */
     border: none; /* remove default border */
@@ -107,6 +117,10 @@ a:hover {
     z-index: 1;
 }
 
+.main.supporting { 
+    grid-area: main;
+}
+
 /* Overlay for header readability */
 #zen-intro header::before {
     content: ""; /* required for pseudo-element */
@@ -122,32 +136,25 @@ a:hover {
 #zen-intro header h1, #zen-intro header h2 {
     position: relative; /* relative positioning for stacking */
     z-index: 1; /* above overlay */
-    color: var(--accent-gold); /* gold text color */
     margin: 0.5em 0; /* margin around text */
+}
+/* Main content area assignment */
+.main.supporting {
+    grid-area: main;
 }
 
 /* Archives and Resources top-right */
 #design-archives, #zen-resources {
-    position: absolute; /* absolute positioning for top-right */
-    right: 1rem; /* distance from right edge */
-    width: 220px; /* fixed width */
-    background-color: rgba(59,59,59,0.9); /* semi-transparent background */
-    padding: 1rem; /* padding inside container */
-    border-radius: 6px; /* rounded corners */
-    box-shadow: 2px 2px 12px rgba(0,0,0,0.7); /* shadow for depth */
-    z-index: 2; /* above other content */
+    position: static; 
+    width: auto; 
+    margin-bottom: 1.5rem; /* space below each section */
+    background-color: transparent; /* Use the sidebar's background */
+    padding: 0; /* Remove padding, sidebar has padding */
+    border-radius: 0; 
+    box-shadow: none; 
 }
 
-/* Stack Resources below Archives */
-#zen-resources {
-    top: calc(1rem + 120px); /* adjust depending on archives height */
-}
-
-#design-archives {
-    top: 1rem; /* distance from top edge */
-}
-
-/* Headings in archives/resources */
+/* Headings in archives/resources*/
 #design-archives h3, #zen-resources h3 {
     margin-bottom: 0.5rem; /* space below heading */
     color: var(--accent-gold); /* gold color */
@@ -179,12 +186,21 @@ a:hover {
 
 /* Sidebar */
 .sidebar {
+    grid-area: sidebar; /* Assigns to the 'sidebar' area */
     background-color: rgba(59,59,59,0.9); /* semi-transparent background */
     padding: 1.5em; /* padding inside sidebar */
-    margin: 0 1em 2em 0; /* margin around sidebar */
-    border-right: 4px solid var(--accent-gold); /* gold right border */
+    margin: 0; /* margin around sidebar */
+    border-left: 4px solid var(--accent-gold); /* ADDED left border for separation */
     box-shadow: 2px 2px 12px rgba(0,0,0,0.7); /* shadow for depth */
+    height: fit-content;
+    position: relative;
 }
+.sidebar .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
 .sidebar h3 {
     color: var(--accent-gold); /* gold color for sidebar headings */
     text-shadow: 1px 1px 3px rgba(0,0,0,0.8); /* shadow for depth */
@@ -201,17 +217,9 @@ section, article, .summary, .preamble, .participation, .benefits, .requirements 
     box-shadow: 3px 3px 14px rgba(0,0,0,0.7); /* shadow for depth */
 }
 
-/* Supporting content */
-.main.supporting > div {
-    border-left: 10px solid var(--accent-gold); /* gold left border */
-    padding: 2.5rem 3rem; /* padding inside supporting content */
-    margin: 3rem 0; /* margin around supporting content */
-    background-clip: padding-box; /* ensure background doesn't bleed under border */
-    box-shadow: 0 0 25px rgba(0,0,0,0.6); /* shadow for depth */
-}
-
 /* Footer */
 footer {
+    grid-area: footer; /*assign grid area*/
     text-align: center; /* center text */
     padding: 2rem; /* padding inside footer */
     margin-top: 4rem; /* space above footer */
@@ -221,52 +229,26 @@ footer {
 }
 
 /* Window panes for sections with stained glass colors */
-#zen-preamble { 
-background-color: gray; color: var(--text-primary); padding: 2rem; margin-bottom: 2rem;  
-} 
-#zen-explanation { 
-    background-color: var(--stained-glass-purple); color: var(--text-primary); padding: 2rem; margin-bottom: 2rem; 
-}
-#zen-participation { 
-    background-color: var(--stained-glass-blue); color: var(--text-primary); padding: 2rem; margin-bottom: 2rem; 
-}
-#zen-benefits { 
-    background-color: var(--stained-glass-red); color: var(--text-secondary); padding: 2rem; margin-bottom: 2rem; 
-}
-#zen-requirements { 
-    background-color: var(--stained-glass-green); color: var(--text-primary); padding: 2rem; margin-bottom: 2rem; 
+#zen-preamble, #zen-explanation, #zen-participation, #zen-benefits, #zen-requirements {
+    background-color: var(--stone-medium); 
+    color: var(--text-primary); 
+    padding: 2rem; 
+    margin-bottom: 2rem; 
 }
 
 /* Stained glass design-selection container */
 #design-selection {
-    display: grid; /* grid layout for design selection */
-    grid-template-rows: 120px auto; /* header row and panes row */
-    width: 90%; /* width of design selection container */
-    max-width: 800px; /* max width */
-    margin: 2rem auto 0 auto; /* center horizontally with top margin */
-    position: relative; /* for stacking header */
-    box-sizing: border-box; /* include padding/border in size */
-}
-
-#design-selection::before {  /* header styling */
-    content: "Select a Design:"; /* header text */
-    display: flex; /* flexbox for centering */
-    align-items: center; /* center items vertically */
-    justify-content: center; /* center items horizontally */
-    width: 100%; /* full width */
-    margin: 0 auto; /* center horizontally */
-    height: 120px; /* fixed height */
-    background: var(--stained-glass-purple);
-    border-radius: 50% 50% 0 0; /* rounded top corners */
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.5); /* inner shadow for depth */
-    border: 2px solid var(--stone-dark);
-    font-family: var(--font-header);
-    font-size: 1.5rem; /* font size */
-    color: var(--accent-gold); 
-    text-shadow: 1px 1px 2px var(--stone-dark);
-    grid-row: 1 / 2; /* place in first row */
-    z-index: 2; /* above panes */
-    box-sizing: border-box; /* include padding/border in size */
+   position: absolute;
+   bottom: 40px; /*place at the bttom of the wrapper */
+   left: 50%;   /*center horizontally*/
+   transform: translateX(-50%); /*center align*/
+   width: 90%;
+   max-width: 800px;
+   z-index: 10;
+   display: grid;
+   grid-template-rows: 120px auto;
+   margin: 0;
+   box-sizing: border-box;
 }
 
 /* 8 panes of the window */
@@ -327,11 +309,55 @@ background-color: gray; color: var(--text-primary); padding: 2rem; margin-bottom
      background: var(--stained-glass-green); 
     }
 
+/* Design Selection Header (Half circle top) */
+#design-selection::before {
+    content: "Select a Design:"; /* text inside the element */
+    display: flex; /*enables flex container for centering*/
+    align-items: center; /* centers content vertically */
+    justify-content: center; /* centers content horizontally */
+    width: 100%; 
+    margin: 0 auto; 
+    height: 120px; 
+    background: var(--stained-glass-purple); /* background color from root variables */
+    border-radius: 50% 50% 0 0; /* creates the half-circle shape (rounded top, flat bottom) */
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5); /* subtle inner shadow for depth/texture */
+    border: 2px solid var(--stone-dark); /* dark border for framing */
+    font-family: var(--font-header);
+    font-size: 1.5rem; 
+    color: var(--accent-gold); 
+    text-shadow: 1px 1px 2px var(--stone-dark);
+    grid-row: 1 / 2; /* positions the pseudo-element in the first row of the #design-selection grid */
+    z-index: 2; /* ensures it stacks above the content panes */
+    box-sizing: border-box;
+}
+
 /* Responsive tweaks */
+@media (max-width: 1000px) { 
+    .page-wrapper {
+        grid-template-columns: 1fr; /* single column */
+        grid-template-areas: 
+            "intro"
+            "sidebar" /* sidebar stacks on top of main content */
+            "main"
+            "footer";
+        padding-bottom: 2em;
+    }
+
+    .sidebar {
+    border-left: none; /* remove left border when stacked */
+    border-top: 4px solid var(--accent-gold); /* add top border for separation */
+    }
+
+    #design-selection {
+        position: static;
+        transform: none;
+        margin: 2rem auto;
+    }
+}
+
 @media (max-width: 600px) { /* for small screens */
     #design-selection { 
         width: 95%; /* wider on small screens */
-        margin: 1rem auto;/* adjust margin */
     }
 
     #design-selection nav ul {
@@ -341,13 +367,5 @@ background-color: gray; color: var(--text-primary); padding: 2rem; margin-bottom
 
     #design-selection nav ul li {
         padding: 0.5rem; /* reduce padding */
-    }
-
-    /* Make archives/resources stack above header */
-    #design-archives,
-    #zen-resources {
-        position: static; /* static positioning */
-        width: auto; /* full width */
-        margin-bottom: 1rem; /* space below */
     }
 }
