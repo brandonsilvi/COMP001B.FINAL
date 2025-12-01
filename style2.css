@@ -6,6 +6,7 @@
     --yellow: #fff000; 
     --red: #ff0044;
     --cyan: #ccffff;
+    --purple: #cc00ff;
     --card: rgba(8,8,20,0.4);
 }
 
@@ -92,5 +93,37 @@ h3 {
 /*----------------------------------*/
 
 a {
-    color: var(--red);
+    color: var(--yellow); /* normal state: links appear in bright yellow (matches your borders) */
+    text-decoration: none; /* removes the default underline from all links */
+    transition: all 0.4s ease; /* smoothly animates color, text-shadow, and any future properties over 0.4 seconds when hovering */
+    position: relative; /* sets positioning context – useful if you later add pseudo-elements (::before/::after) on links */
+}
+
+a:hover { /* triggers only when the mouse is directly over a link */
+  color: var(--purple); /* changes text color to bright cyberpunk purple (#cc00ff = neon magenta-purple) */
+  text-shadow: 
+    0 0 20px var(--purple), /* inner glow layer */
+    0 0 40px var(--purple), /* medium glow ring */
+    0 0 60px var(--purple); /* outer glow rinhg */
+  animation: flash-purple 0.4s infinite;   /* activates the flashing keyframe animation, runs every 0.7 seconds forever while hovered */
+}  /* infinite makes the it loop */
+
+/*The flashing effect is created by rapidly changing the text shadow when the hyperlink is hovered*/
+
+@keyframes flash-purple { /*animation called "flash-purple" defined that can be used anywhere */
+  0%, 100% {  /* keyframes at the very start (0%) and very end (100%) of each cycle */
+    /* using both makes the animation return cleanly to the "off" state */
+    text-shadow: /* controls the glow around the text during the "dim" phase */
+      0 0 10px var(--purple),/* small, tight core glow – barely visible halo */
+      0 0 20px var(--purple), /* medium ring of purple light */
+      0 0 30px var(--purple);/* outer soft glow – this is the "low intensity" / "off" look */
+   /* three layers = rich, volumetric neon effect even when dim */
+  }
+  50% { /* exact midpoint of the animation cycle (peak of the flash) */
+    text-shadow: /* full-power strobe state – maximum brightness */
+      0 0 30px var(--purple), /* core glow becomes much larger and hotter */
+      0 0 60px var(--purple), /* middle ring expands dramatically */
+      0 0 90px var(--purple); /* massive outer halo – looks like a purple EMP burst or ICE breach */
+/* this sudden jump in size + brightness creates the aggressive "flash" */
+  }
 }
