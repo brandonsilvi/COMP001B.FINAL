@@ -2,6 +2,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&family=Share+Tech+Mono&display=swap');
 /*link to googlefonts*/
 
+:root {
+    --yellow: #fff000; 
+    --red: #ff0044;
+    --cyan: #ccffff;
+    --card: rgba(8,8,20,0.4);
+}
+
 * {
     margin:0; padding:0; box-sizing:border-box; /*page reset*/
 }
@@ -10,10 +17,11 @@ body {
   margin: 0; /* ensures no extra space around the very edge of the browser */
   min-height: 100vh; /*pPage always takes at least full viewport height */
   font-family: 'Share Tech Mono', monospace; /* retro terminal font for all text */
-  color: #ccffff; /* light cyan text – highly readable over dark neon backgrounds */
+  color: var(--cyan); /* light cyan text – highly readable over dark neon backgrounds */
   background: #000; /* solid black fallback if the GIF ever fails to load */
   position: relative; /* required so ::before and ::after are positioned relative to <body> */
   overflow-x: hidden; /* prevents any horizontal scrollbar from appearing */
+  padding: 20px;
 }
 
 /* adding background GIF*/
@@ -37,4 +45,50 @@ body::after {
   background: rgba(0, 0, 0, 0.65); /*black overlay to help text visability */
   z-index: -1; /*in front of gif behind text*/
   pointer-events: none; /* allows clicks to pass through to the actual page */
+}
+
+.intro, .summary, .preamble, .explanation, .participation,
+.benefits, .requirements, footer, .design-selection, .design-archives, .zen-resources {
+background: var(--card); /* very dark navy-black with slight transparency*/
+border: 7px solid var(--yellow); /* bright yellow border*/
+padding: 50px; /*spacing inside so text doesn’t touch the border */
+margin: 60px auto; /* vertical spacing between panels + horizontally centered */
+max-width: 960px; /* keeps panels from stretching too wide on huge screens */
+box-shadow: 0 0 30px rgba(255,255,0,0.4);
+}
+
+footer {
+    text-align: center;
+}
+
+h1, h2, h3 {
+    font-family: 'Orbitron', sans-serif; font-weight: 900; 
+}
+
+h1 {
+  font-size: 5rem;
+  text-align: center;
+  color: var(--yellow);
+  text-shadow: 0 0 25px var(--yellow);
+  margin: 40px 0 20px;
+}
+
+h2 {
+  font-size: 2.4rem;
+  text-align: center;
+  color: var(--red);
+  text-shadow: 0 0 20px var(--red);
+  margin-bottom: 50px;
+}
+
+h3 {
+  font-size: 1.9rem;
+  color: var(--yellow);
+  border-bottom: 3px dashed var(--red);
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+}
+
+a {
+    color: var(--red);
 }
