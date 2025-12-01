@@ -34,7 +34,6 @@ body {
     line-height: 1.8; /* increased line height for readability */
     padding: 2em; /* padding around content */
     position: relative; /* for overlay */
-    font-size: 1.5em; 
 }
 
 /* Overlay for gothic effect */
@@ -80,13 +79,12 @@ a:hover {
 .page-wrapper {
     display: grid; /* grid layout for page structure */
     /* Defines columns: Main Content (flexible) and Sidebar (fixed width) */
-    grid-template-columns: 1fr 280px; 
-    /* Defines areas: Header/Intro spans both, Main and Sidebar side-by-side, Footer spans both */
+    grid-template-columns: 1fr; 
+    /* Defines areas: Header/Intro spans both, Main and Sidebar side-by-side */
     grid-template-areas:  
-        "intro intro" 
-        "main main"
-        "sidebar sidebar" 
-        "footer footer";
+        "intro" 
+        "main" 
+        "sidebar";
     column-gap: 3rem; /* Space between main and sidebar */
     row-gap: 2rem; /* Space between rows */
     width: 90%; /* width of page wrapper */
@@ -94,7 +92,7 @@ a:hover {
     margin: 0 auto; /* center horizontally */
     box-sizing: border-box; /* include padding/border in size */
     position: relative;
-    padding-bottom: 600px;
+    padding-bottom: 2em;
 }
 
 /* Zen Intro Header */
@@ -126,7 +124,16 @@ a:hover {
 }
 
 .main.supporting { 
-    grid-area: main;
+    grid-area: main; /*keeps it the main column of the page wrapper */
+    display: grid; /*making the grid */
+    grid-template-columns: 1fr 1fr; /*2 equal columns*/
+    grid-template-rows: min-content min-content min-content auto; /*4 rows with min-content tag to avoid stretching */
+    grid-template-areas: /*this sets up the layout for this grid*/
+        "explain explain"    /* Row 1 #zen-explanation spans both columns */
+        "participate benefits" /* Row 2 Participation and Benefits side-by-side */
+        "requirements requirements"  /* Row 3 Requirements spans both columns (clean break) */
+        "lorem lorem"; /* Row 4: All subsequent sections stack full-width below */
+    gap: 3rem;/*adds spacing btwn the grid items*/
 }
 
 /* Overlay for header readability */
@@ -234,13 +241,19 @@ section, .summary {
 
 /* Footer */
 footer {
-    grid-area: footer; /*assign grid area*/
-    text-align: center; /* center text */
-    padding: 2rem; /* padding inside footer */
-    margin-top: 4rem; /* space above footer */
-    background-color: rgba(43,43,43,0.95); /* semi-transparent background */
-    color: var(--text-secondary); /* secondary text color */
-    border-left: 6px solid var(--accent-gold); /* gold left border */
+    grid-area: unset; /*remove from grid*/
+    display: block; 
+    width: 100%; /*expand the entire viewport width*/
+    text-align: left;
+    padding: 2rem 2em;
+    margin-top: 4rem;
+    background-color: rgba(46,46,46,0.95);
+    color: var(--text-secondary);
+    border-left: 6px solid var(--accent-gold); /* Keep the gold border on the left edge */
+}
+
+html { 
+    overflow-x: hidden; 
 }
 
 /* Window panes for sections with stained glass colors */
@@ -251,15 +264,41 @@ footer {
     margin-bottom: 2rem; 
     border-left: 6px solid var(--accent-gold);
 }
+/*grid area assignments*/
+#zen-explanation {
+    grid-area: explain; /* spans both columns in Row 1 */
+    margin-bottom: 0 !important; /* remove bottom margin here, gap handles spacing */
+}
 
-/* Style for individual blocks inside the sidebar wrapper */
+#zen-participation {
+    grid-area: participate; /* column 1, Row 2 */
+    margin-bottom: 0 !important;
+}
+
+#zen-benefits {
+    grid-area: benefits; /* column 2, Row 2 */
+    margin-bottom: 0 !important;
+}
+
+#zen-requirements {
+    grid-area: requirements; /* spans both columns in Row 3 */
+    margin-bottom: 0 !important;
+}
+
+/* catch-all for all subsequent sections (e.g., #zen-lorem, etc.) */
+/* ensures all articles after requirements stack full-width in the "lorem" area. */
+.main.supporting > section:not(#zen-explanation):not(#zen-participation):not(#zen-benefits):not(#zen-requirements) {
+    grid-area: lorem; 
+}
+
+/* style for individual blocks inside the sidebar wrapper */
 .sidebar .wrapper > div {
-    /* General look for blocks (Archives/Resources) - Design Selection is handled separately */
-    background-color: var(--stone-medium); /* Darker stone for the containers */
-    padding: 1.5rem; /* Inner padding */
-    border: 1px solid var(--accent-gold); /* Gold frame */
-    border-radius: 6px; /* Rounded corners for contained feeling */
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Subtle shadow */
+    /* general look for blocks (archives/resources) - design selection is handled separately */
+    background-color: var(--stone-medium); /* darker stone for the containers */
+    padding: 1.5rem; /* inner padding */
+    border: 1px solid var(--accent-gold); /* gold frame */
+    border-radius: 6px; /* rounded corners for contained feeling */
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* subtle shadow */
 }
 
 /* Override for the Design Selection element (to maintain stained glass look) */
@@ -268,7 +307,6 @@ footer {
     transform: none !important;
     max-width: none !important;
     width: 100% !important;
-    
     /* Apply base container styles */
     background-color: transparent !important; /* Let the window panes show through */
     padding: 0 !important;
@@ -404,7 +442,7 @@ footer {
 }
 
 /* Responsive tweaks */
-@media (max-width: 1000px) { 
+@media (max-width: 900px) { 
     .page-wrapper {
         grid-template-columns: 1fr; /* single column */
         grid-template-areas: 
@@ -413,6 +451,16 @@ footer {
             "sidebar" 
             "footer";
         padding-bottom: 2em;
+    }
+        .main.supporting {
+            grid-template-columns: 1fr;
+            grid-template-areas:
+            "explain" 
+            "participate"
+            "benefits"
+            "requirements" 
+            "lorem"; ;
+        }
     }
 
     .sidebar {
@@ -425,7 +473,6 @@ footer {
         transform: none;
         margin: 2rem auto;
     }
-}
 
 @media (max-width: 600px) { /* for small screens */
     #design-selection { 
